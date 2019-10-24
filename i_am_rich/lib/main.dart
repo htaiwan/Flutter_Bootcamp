@@ -11,8 +11,7 @@ void main() {
         ),
         body: Center(
           child: Image(
-            image: NetworkImage(
-                'https://pngimage.net/wp-content/uploads/2018/06/online-png-4.png'),
+            image: AssetImage('images/diamond.png'),
           ),
         ),
       ),

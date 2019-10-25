@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-void main() => runApp(MyApp2());
+void main() => runApp(MyApp3());
 
 // 直接打"stless", 可以快速產生StatelessWidget樣板
 class MyApp extends StatelessWidget {
@@ -79,6 +79,49 @@ class MyApp2 extends StatelessWidget {
                 child: Text('Container1 3'),
               ),
               Container(width: double.infinity, height: 100)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MyApp3 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: 100,
+                color: Colors.red,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 100,
+                    width: 100,
+                    color: Colors.yellow,
+                  ),
+                  Container(
+                    height: 100,
+                    width: 100,
+                    color: Colors.green,
+                  )
+                ],
+              ),
+              Container(
+                height: double.infinity,
+                width: 100,
+                color: Colors.blue,
+              ),
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MyApp2());
 
 // 直接打"stless", 可以快速產生StatelessWidget樣板
 class MyApp extends StatelessWidget {
@@ -26,6 +27,59 @@ class MyApp extends StatelessWidget {
             padding: EdgeInsets.all(10),
             color: Colors.white,
             child: Text('Hello World !'),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/*
+  - 文件: https://api.flutter.dev/flutter/widgets/Column-class.html
+  - Column可以有多個child
+  - 參考: https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e
+ */
+class MyApp2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: SafeArea(
+          child: Column(
+            // 將主軸(column)的大小，剛好包住整個child內容
+            // mainAxisSize: MainAxisSize.min,
+            // 沿著column的底端仼上爬
+            // verticalDirection: VerticalDirection.up,
+            // 控制child在column的layout方式
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // 控制child的主軸的垂直方向的layout方式
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                height: 100,
+                width: 100,
+                color: Colors.white,
+                child: Text('Container1 !'),
+              ),
+              // 利用sizebox來分割2個child間距
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 100,
+                width: 100,
+                color: Colors.yellow,
+                child: Text('Container1 2'),
+              ),
+              Container(
+                height: 100,
+                width: 100,
+                color: Colors.red,
+                child: Text('Container1 3'),
+              ),
+              Container(width: double.infinity, height: 100)
+            ],
           ),
         ),
       ),

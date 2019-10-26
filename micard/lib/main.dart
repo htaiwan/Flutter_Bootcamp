@@ -144,12 +144,23 @@ class MiCardApp extends StatelessWidget {
                 backgroundImage: AssetImage('images/Kai.jpg'),
               ),
               Text(
-                'Kai',
+                'Kai Cheng',
                 style: TextStyle(
+                  fontFamily: 'LiuJianMaoCao',
                   color: Colors.white,
                   fontSize: 40,
                 ),
-              )
+              ),
+              Text(
+                'Flutter Developer',
+                style: TextStyle(
+                  fontFamily: 'Cairo',
+                  color: Colors.teal.shade100,
+                  fontSize: 20,
+                  letterSpacing: 2.5,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ),

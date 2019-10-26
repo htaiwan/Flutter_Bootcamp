@@ -20,3 +20,14 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+
+  # https://flutter.dev/docs/cookbook/design/fonts
+  # https://fonts.google.com
+  fonts:
+  - family: LiuJianMaoCao
+    fonts:
+    - asset: fonts/LiuJianMaoCao-Regular.ttf
+
+  - family: Cairo
+    fonts:
+    - asset: fonts/Cairo-Bold.ttf

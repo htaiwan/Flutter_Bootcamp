@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-void main() => runApp(MyApp3());
+void main() => runApp(MiCardApp());
 
 // 直接打"stless", 可以快速產生StatelessWidget樣板
 class MyApp extends StatelessWidget {
@@ -122,6 +122,34 @@ class MyApp3 extends StatelessWidget {
                 width: 100,
                 color: Colors.blue,
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MiCardApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('images/Kai.jpg'),
+              ),
+              Text(
+                'Kai',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
+                ),
+              )
             ],
           ),
         ),

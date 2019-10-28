@@ -18,6 +18,16 @@ void main() {
 class DicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Row(
+      children: <Widget>[
+        // https://api.flutter.dev/flutter/widgets/Expanded-class.html
+        Expanded(
+          child: Image.asset('images/dice1.png'),
+        ),
+        Expanded(
+          child: Image.asset('images/dice1.png'),
+        ),
+      ],
+    );
   }
 }

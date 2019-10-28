@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -36,8 +38,8 @@ class _DicePageState extends State<DicePage> {
                 setState(() {
                   // 在這裡會將leftDiceNumber打上dirty flag, 所以之後refresh widget tree
                   // 只會針對這些所有有用到leftDiceNumber的地方都進行更新
-                  leftDiceNumber = 3;
-                  print('number = $leftDiceNumber');
+                  leftDiceNumber = Random().nextInt(6) + 1; // 產生1~6
+                  print('left number = $leftDiceNumber');
                 });
               },
               child: Image.asset('images/dice$leftDiceNumber.png'),

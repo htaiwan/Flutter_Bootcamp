@@ -25,6 +25,7 @@ class DicePage extends StatefulWidget {
 class _DicePageState extends State<DicePage> {
   // 盡量少用var, dynamic確保save type
   int leftDiceNumber = 5;
+  int rightDiceNumber = 3;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -52,9 +53,12 @@ class _DicePageState extends State<DicePage> {
           Expanded(
             child: FlatButton(
               onPressed: () {
-                print("按右邊");
+                setState(() {
+                  rightDiceNumber = Random().nextInt(6) + 1;
+                  print('right unmber = $rightDiceNumber');
+                });
               },
-              child: Image.asset('images/dice1.png'),
+              child: Image.asset('images/dice$rightDiceNumber.png'),
             ),
           ),
         ],

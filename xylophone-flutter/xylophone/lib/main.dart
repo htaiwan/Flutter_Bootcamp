@@ -16,9 +16,20 @@ class XyloPhoneApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  void _playSound(int number) {
+  void _playSound({int soundsNumber}) {
     final AudioCache player = AudioCache();
-    player.play('note$number.wav');
+    player.play('note$soundsNumber.wav');
+  }
+
+  Expanded _buildRow({int soundsNumber, Color color}) {
+    return Expanded(
+      child: FlatButton(
+        onPressed: () {
+          _playSound(soundsNumber: soundsNumber);
+        },
+        color: color,
+      ),
+    );
   }
 
   @override
@@ -32,48 +43,13 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            FlatButton(
-              onPressed: () {
-                _playSound(1);
-              },
-              color: Colors.red,
-            ),
-            FlatButton(
-              onPressed: () {
-                _playSound(2);
-              },
-              color: Colors.orange,
-            ),
-            FlatButton(
-              onPressed: () {
-                _playSound(3);
-              },
-              color: Colors.yellow,
-            ),
-            FlatButton(
-              onPressed: () {
-                _playSound(4);
-              },
-              color: Colors.green,
-            ),
-            FlatButton(
-              onPressed: () {
-                _playSound(5);
-              },
-              color: Colors.greenAccent,
-            ),
-            FlatButton(
-              onPressed: () {
-                _playSound(6);
-              },
-              color: Colors.blue,
-            ),
-            FlatButton(
-              onPressed: () {
-                _playSound(7);
-              },
-              color: Colors.purple,
-            ),
+            _buildRow(soundsNumber: 1, color: Colors.red),
+            _buildRow(soundsNumber: 2, color: Colors.orange),
+            _buildRow(soundsNumber: 3, color: Colors.yellow),
+            _buildRow(soundsNumber: 4, color: Colors.green),
+            _buildRow(soundsNumber: 5, color: Colors.greenAccent),
+            _buildRow(soundsNumber: 6, color: Colors.blue),
+            _buildRow(soundsNumber: 7, color: Colors.purple),
           ],
         ),
       ),

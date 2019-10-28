@@ -16,8 +16,16 @@ void main() {
 }
 
 class DicePage extends StatelessWidget {
+  /*
+  如果把變數放在這裡，那麼hot reload不會作用，因為hot reload只會觸發build function
+  所以要把變數放在build function中
+   */
+  // var leftDiceNumber = 5;
+
   @override
   Widget build(BuildContext context) {
+    var leftDiceNumber = 3;
+
     return Center(
       child: Row(
         children: <Widget>[
@@ -28,7 +36,7 @@ class DicePage extends StatelessWidget {
               onPressed: () {
                 print("按左邊");
               },
-              child: Image.asset('images/dice1.png'),
+              child: Image.asset('images/dice$leftDiceNumber.png'),
             ),
           ),
           /*

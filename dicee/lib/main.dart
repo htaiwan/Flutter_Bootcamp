@@ -15,17 +15,16 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
-  /*
-  如果把變數放在這裡，那麼hot reload不會作用，因為hot reload只會觸發build function
-  所以要把變數放在build function中
-   */
-  // var leftDiceNumber = 5;
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
 
+class _DicePageState extends State<DicePage> {
+  // 盡量少用var, dynamic確保save type
+  int leftDiceNumber = 5;
   @override
   Widget build(BuildContext context) {
-    var leftDiceNumber = 3;
-
     return Center(
       child: Row(
         children: <Widget>[
@@ -34,7 +33,12 @@ class DicePage extends StatelessWidget {
             // https://api.flutter.dev/flutter/material/FlatButton-class.html
             child: FlatButton(
               onPressed: () {
-                print("按左邊");
+                setState(() {
+                  // 在這裡會將leftDiceNumber打上dirty flag, 所以之後refresh widget tree
+                  // 只會針對這些所有有用到leftDiceNumber的地方都進行更新
+                  leftDiceNumber = 3;
+                  print('number = $leftDiceNumber');
+                });
               },
               child: Image.asset('images/dice$leftDiceNumber.png'),
             ),

@@ -23,8 +23,11 @@ class DicePage extends StatelessWidget {
         children: <Widget>[
           // https://api.flutter.dev/flutter/widgets/Expanded-class.html
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            // https://api.flutter.dev/flutter/material/FlatButton-class.html
+            child: FlatButton(
+              onPressed: () {
+                print("按左邊");
+              },
               child: Image.asset('images/dice1.png'),
             ),
           ),
@@ -33,8 +36,10 @@ class DicePage extends StatelessWidget {
             可以快速移動widget到tree的某一個點
            */
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: FlatButton(
+              onPressed: () {
+                print("按右邊");
+              },
               child: Image.asset('images/dice1.png'),
             ),
           ),

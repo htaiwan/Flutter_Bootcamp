@@ -40,6 +40,7 @@ class _DicePageState extends State<DicePage> {
                   // 在這裡會將leftDiceNumber打上dirty flag, 所以之後refresh widget tree
                   // 只會針對這些所有有用到leftDiceNumber的地方都進行更新
                   leftDiceNumber = Random().nextInt(6) + 1; // 產生1~6
+                  rightDiceNumber = Random().nextInt(6) + 1;
                   print('left number = $leftDiceNumber');
                 });
               },
@@ -54,6 +55,7 @@ class _DicePageState extends State<DicePage> {
             child: FlatButton(
               onPressed: () {
                 setState(() {
+                  leftDiceNumber = Random().nextInt(6) + 1; // 產生1~6
                   rightDiceNumber = Random().nextInt(6) + 1;
                   print('right unmber = $rightDiceNumber');
                 });

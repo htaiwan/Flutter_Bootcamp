@@ -31,6 +31,7 @@ class _QuizPageState extends State<QuizPage> {
     'Approximately one quarter of human bones are in the feet.',
     'A slug\'s blood is green.'
   ];
+  List<bool> answers = [false, true, true];
 
   int _questionNumber = 0;
 
@@ -39,6 +40,16 @@ class _QuizPageState extends State<QuizPage> {
       return _questions[questionNumber];
     }
     return "";
+  }
+
+  void _checkAnswer({int questionNumber, bool answer}) {
+    if (questionNumber < answers.length) {
+      if (answers[questionNumber] == answer) {
+        _scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+      } else {
+        _scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+      }
+    }
   }
 
   @override
@@ -78,8 +89,8 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
+                  _checkAnswer(questionNumber: _questionNumber, answer: true);
                   _questionNumber++;
-                  _scoreKeeper.add(Icon(Icons.check, color: Colors.green));
                 });
               },
             ),
@@ -99,8 +110,8 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
+                  _checkAnswer(questionNumber: _questionNumber, answer: false);
                   _questionNumber++;
-                  _scoreKeeper.add(Icon(Icons.close, color: Colors.red));
                 });
               },
             ),

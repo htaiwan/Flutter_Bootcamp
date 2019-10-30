@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
+
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -25,31 +29,30 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> _scoreKeeper = [];
-  List<String> _questions = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.'
-  ];
-  List<bool> answers = [false, true, true];
+  List<Icon> scoreKeeper = [];
 
-  int _questionNumber = 0;
+  void checkAnswer({bool userPickAnswer}) {
+    bool correctAnswer = quizBrain.checkAnswer(userPickAnswer: userPickAnswer);
 
-  String _showQueston({int questionNumber}) {
-    if (questionNumber < _questions.length) {
-      return _questions[questionNumber];
-    }
-    return "";
-  }
-
-  void _checkAnswer({int questionNumber, bool answer}) {
-    if (questionNumber < answers.length) {
-      if (answers[questionNumber] == answer) {
-        _scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+    setState(() {
+      if (correctAnswer) {
+        scoreKeeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
       } else {
-        _scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+        scoreKeeper.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
       }
-    }
+
+      quizBrain.nextQuestion();
+    });
   }
 
   @override
@@ -64,7 +67,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                _showQueston(questionNumber: _questionNumber),
+                quizBrain.showQuestion(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -88,10 +91,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  _checkAnswer(questionNumber: _questionNumber, answer: true);
-                  _questionNumber++;
-                });
+                checkAnswer(userPickAnswer: true);
               },
             ),
           ),
@@ -109,16 +109,13 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  _checkAnswer(questionNumber: _questionNumber, answer: false);
-                  _questionNumber++;
-                });
+                checkAnswer(userPickAnswer: false);
               },
             ),
           ),
         ),
         Row(
-          children: _scoreKeeper,
+          children: scoreKeeper,
         ),
       ],
     );

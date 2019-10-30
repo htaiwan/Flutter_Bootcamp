@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'quiz_brain.dart';
 
@@ -32,6 +33,27 @@ class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
   void checkAnswer({bool userPickAnswer}) {
+    if (quizBrain.hasNextQuestion() == false) {
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "完畢",
+        desc: "題目已出完",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "關閉",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+
+      return;
+    }
+
     bool correctAnswer = quizBrain.checkAnswer(userPickAnswer: userPickAnswer);
 
     setState(() {

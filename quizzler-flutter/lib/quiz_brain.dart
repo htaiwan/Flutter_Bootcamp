@@ -10,6 +10,14 @@ class QuizBrain {
     Question(q: 'A slug\'s blood is green.', a: true),
   ];
 
+  bool hasNextQuestion() {
+    if (_questionNumber >= questions.length - 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   void nextQuestion() {
     if (_questionNumber < questions.length - 1) {
       _questionNumber++;

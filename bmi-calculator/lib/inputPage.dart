@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'gender_card.dart';
+import 'reusable_card.dart';
 
 const bottomContainerHeight = 80.0;
 const activeCardColor = 0xFF1D1E33;
@@ -24,11 +28,19 @@ class _InputPageState extends State<InputPage> {
                 children: <Widget>[
                   Expanded(
                     child: ReusableCard(
-                      color: Color(0xFF1D1E33),
+                      cardChild: GenderCard(
+                        icon: FontAwesomeIcons.mars,
+                        title: "男生",
+                      ),
+                      color: Color(activeCardColor),
                     ),
                   ),
                   Expanded(
                     child: ReusableCard(
+                      cardChild: GenderCard(
+                        icon: FontAwesomeIcons.venus,
+                        title: "女生",
+                      ),
                       color: Color(activeCardColor),
                     ),
                   ),
@@ -64,25 +76,6 @@ class _InputPageState extends State<InputPage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  // 為什麼這裡是用final
-  // https://dart.dev/guides/language/language-tour#final-and-const
-  final Color color;
-
-  ReusableCard({@required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10.0),
       ),
     );
   }

@@ -5,17 +5,21 @@ class ReusableCard extends StatelessWidget {
   // https://dart.dev/guides/language/language-tour#final-and-const
   final Color color;
   final Widget cardChild;
+  final Function onTap;
 
-  ReusableCard({@required this.color, this.cardChild});
+  ReusableCard({@required this.color, this.cardChild, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: cardChild,
-      margin: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10.0),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        child: cardChild,
+        margin: EdgeInsets.all(15.0),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
       ),
     );
   }

@@ -5,6 +5,12 @@ import '../components/bottom_button.dart';
 import '../components/reusable_card.dart';
 
 class ResultPage extends StatelessWidget {
+  final String number;
+  final String result;
+  final String analysis;
+
+  ResultPage({this.number, this.result, this.analysis});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,15 +40,15 @@ class ResultPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      '超級肥胖',
+                      result,
                       style: kResultTextStyle,
                     ),
                     Text(
-                      '78',
+                      number,
                       style: kBMITextStyle,
                     ),
                     Text(
-                      '超級肥胖超級肥胖超級肥胖超級肥胖超級肥胖超級肥胖超級肥胖超級肥胖超級肥胖',
+                      analysis,
                       style: kBMIBodyStyle,
                       textAlign: TextAlign.center,
                     ),

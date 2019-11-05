@@ -1,9 +1,11 @@
+import 'dart:core';
 import 'dart:io' show Platform;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'coin_data.dart';
+import 'networking.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -12,6 +14,8 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = 'USD';
+  String currencyResult = '?';
+  NetworkHelper networkHelper = NetworkHelper();
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownMenuItems = [];
@@ -27,9 +31,13 @@ class _PriceScreenState extends State<PriceScreen> {
     return DropdownButton<String>(
         value: selectedCurrency,
         items: dropdownMenuItems,
-        onChanged: (value) {
+        onChanged: (value) async {
+          var responseData =
+              await networkHelper.getBitCoinCurrency(country: value);
           setState(() {
             selectedCurrency = value;
+            double cur = responseData["last"];
+            currencyResult = cur.toStringAsFixed(0);
           });
         });
   }
@@ -44,9 +52,12 @@ class _PriceScreenState extends State<PriceScreen> {
     return CupertinoPicker(
       backgroundColor: Colors.lightBlue,
       itemExtent: 32.0,
-      onSelectedItemChanged: (selectedIndex) {
+      onSelectedItemChanged: (selectedIndex) async {
+        var responseData = await networkHelper.getBitCoinCurrency(
+            country: currenciesList[selectedIndex]);
         setState(() {
           selectedCurrency = currenciesList[selectedIndex];
+          currencyResult = responseData["last"].toStringAS;
         });
       },
       children: dropdownMenuItems,
@@ -74,7 +85,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? $selectedCurrency',
+                  '1 BTC = $currencyResult $selectedCurrency',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,

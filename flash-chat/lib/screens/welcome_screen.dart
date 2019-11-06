@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
+import '../components/rounded_button.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 
@@ -43,49 +44,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             SizedBox(
               height: 48.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                elevation: 5.0,
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to login screen.
-                    Navigator.pushNamed(context, LoginScreen.id);
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                  ),
-                ),
-              ),
+            RoundedButton(
+              buttonTitle: "login",
+              buttonColor: Colors.lightBlueAccent,
+              onPress: () {
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to registration screen.
-                    Navigator.pushNamed(context, RegistrationScreen.id);
-                    // 另外寫法
+            RoundedButton(
+              buttonTitle: 'Register',
+              buttonColor: Colors.blueAccent,
+              onPress: () {
+                //Go to registration screen.
+                Navigator.pushNamed(context, RegistrationScreen.id);
+                // 另外寫法
 //                    Navigator.push(
 //                      context,
 //                      MaterialPageRoute(
 //                          builder: (context) => RegistrationScreen()),
 //                    );
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Register',
-                  ),
-                ),
-              ),
+              },
             ),
           ],
         ),

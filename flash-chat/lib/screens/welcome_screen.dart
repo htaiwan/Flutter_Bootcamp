@@ -32,7 +32,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
 
     // 另外一種Animation方式
-    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    animation =
+        ColorTween(begin: Colors.red, end: Colors.blue).animate(controller);
 
     controller.forward();
 
@@ -61,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -74,7 +75,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: "logo",
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: controller.value * 100,
+                    height: 60.0,
                   ),
                 ),
                 Text(

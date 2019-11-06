@@ -10,59 +10,11 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    /*
-    加了SingleTickerProviderStateMixin, WelcomeScreenState才具有TickerProvider功能
-    vsync是需要提供TickerProvider功能widget
-
-    沒有給定upperbound時，value預設是0~1
-    若給AnimationController加上CurvedAnimation, 則不可以設定uppderbound
-     */
-    controller = AnimationController(
-      duration: Duration(seconds: 3),
-      vsync: this,
-    );
-
-    // 另外一種Animation方式
-    animation =
-        ColorTween(begin: Colors.red, end: Colors.blue).animate(controller);
-
-    controller.forward();
-
-    // repeat動畫
-    animation.addStatusListener((status) {
-      print(status);
-      if (status == AnimationStatus.completed) {
-        controller.reverse(from: 1);
-      } else if (status == AnimationStatus.dismissed) {
-        controller.forward();
-      }
-    });
-
-    controller.addListener(() {
-      setState(() {});
-      print(controller.value);
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: animation.value,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(

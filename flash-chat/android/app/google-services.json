@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "980636118235",
+    "firebase_url": "https://flashchat-777cb.firebaseio.com",
+    "project_id": "flashchat-777cb",
+    "storage_bucket": "flashchat-777cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980636118235:android:9c1f24df6f11f7ebb970fe",
+        "android_client_info": {
+          "package_name": "co.htaiwan.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980636118235-lqv4548qk5ogv35k3t40s2t8v74kka3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn266cLxIIbJYx-6NcHoGNEIiSJ1ECsvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980636118235-lqv4548qk5ogv35k3t40s2t8v74kka3u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

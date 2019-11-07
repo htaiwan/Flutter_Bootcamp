@@ -28,6 +28,24 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void getMessages() async {
+    final messages =
+        await _firestore.collectionGroup("messages").getDocuments();
+    for (var message in messages.documents) {
+      print(message.data);
+    }
+  }
+
+  // 這個是動態的listener只要db資料更新，就會被通知
+  void messageStream() async {
+    await for (var stream
+        in _firestore.collectionGroup("messages").snapshots()) {
+      for (var message in stream.documents) {
+        print(message.data);
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();

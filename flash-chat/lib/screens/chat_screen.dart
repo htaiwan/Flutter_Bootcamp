@@ -11,13 +11,13 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   FirebaseAuth _auth;
-  var currentUser;
+  FirebaseUser loginUser;
 
   void getCurrentUser() async {
     try {
       FirebaseUser currentUser = await _auth.currentUser();
       if (currentUser != null) {
-        print(currentUser.email);
+        loginUser = currentUser;
       }
     } catch (e) {
       print(e);
@@ -40,7 +40,8 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                //Implement logout functionality
+                _auth.signOut();
+                Navigator.pop(context);
               }),
         ],
         title: Text('⚡️Chat'),

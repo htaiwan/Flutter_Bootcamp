@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
 
+Firestore _firestore = Firestore.instance;
+
 class ChatScreen extends StatefulWidget {
   static String id = 'ChatScreen';
 
@@ -11,9 +13,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  FirebaseAuth _auth;
-  Firestore _firestore;
-
+  final TextEditingController controller = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser loginUser;
   String messageText;
 
@@ -49,8 +50,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _auth = FirebaseAuth.instance;
-    _firestore = Firestore.instance;
     getCurrentUser();
   }
 
@@ -75,38 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            /*
-            <QuerySnapshot>是firebase的data type，是因為在stream:中給予的是
-            firebase的QuerySnapshot
-            */
-            StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection("messages").snapshots(),
-              // 這裡的snapshot是從flutter定義出來asyn_snapshot
-              builder: (context, snapshot) {
-                List<Text> messageWidgets = [];
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.lightBlue,
-                    ),
-                  );
-                }
-
-                final messages = snapshot.data.documents;
-                for (var message in messages) {
-                  final messageText = message.data['text'];
-                  final messageSender = message.data['sender'];
-                  final messageWidget = Text(
-                    '$messageText 來自 $messageSender',
-                    style: TextStyle(color: Colors.white),
-                  );
-                  messageWidgets.add(messageWidget);
-                }
-                return Column(
-                  children: messageWidgets,
-                );
-              },
-            ),
+            MessageStream(),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -114,6 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: controller,
                       onChanged: (value) {
                         messageText = value;
                       },
@@ -122,6 +91,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
+                      controller.clear();
                       _firestore.collection('messages').add({
                         'text': messageText,
                         'sender': loginUser.email,
@@ -137,6 +107,87 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessageStream extends StatelessWidget {
+  /*
+            <QuerySnapshot>是firebase的data type，是因為在stream:中給予的是
+            firebase的QuerySnapshot
+            */
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firestore.collection("messages").snapshots(),
+      // 這裡的snapshot是從flutter定義出來asyn_snapshot
+      builder: (context, snapshot) {
+        List<MessageBubble> messageWidgets = [];
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.lightBlue,
+            ),
+          );
+        }
+
+        final messages = snapshot.data.documents;
+        for (var message in messages) {
+          final messageText = message.data['text'];
+          final messageSender = message.data['sender'];
+          MessageBubble bubble = MessageBubble(
+            message: messageText,
+            sender: messageSender,
+          );
+          messageWidgets.add(bubble);
+        }
+        // 要把ListView包在Expanded，是因為下面還有Container(text, send button)
+        // 這樣ListView才知道要長多高
+        return Expanded(
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            children: messageWidgets,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  MessageBubble({this.message, this.sender});
+
+  final String message;
+  final String sender;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      // 讓每個氣泡不要連在一起
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Text(
+            sender,
+            style: TextStyle(color: Colors.white, fontSize: 10.0),
+          ),
+          Material(
+            borderRadius: BorderRadius.circular(30.0),
+            // 陰影
+            elevation: 5.0,
+            color: Colors.lightBlueAccent,
+            child: Padding(
+              // 讓藍色泡泡跟內部文字有個距離
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                '$message',
+                style: TextStyle(color: Colors.white, fontSize: 20.0),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

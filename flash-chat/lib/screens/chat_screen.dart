@@ -75,6 +75,38 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            /*
+            <QuerySnapshot>是firebase的data type，是因為在stream:中給予的是
+            firebase的QuerySnapshot
+            */
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection("messages").snapshots(),
+              // 這裡的snapshot是從flutter定義出來asyn_snapshot
+              builder: (context, snapshot) {
+                List<Text> messageWidgets = [];
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.lightBlue,
+                    ),
+                  );
+                }
+
+                final messages = snapshot.data.documents;
+                for (var message in messages) {
+                  final messageText = message.data['text'];
+                  final messageSender = message.data['sender'];
+                  final messageWidget = Text(
+                    '$messageText 來自 $messageSender',
+                    style: TextStyle(color: Colors.white),
+                  );
+                  messageWidgets.add(messageWidget);
+                }
+                return Column(
+                  children: messageWidgets,
+                );
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(

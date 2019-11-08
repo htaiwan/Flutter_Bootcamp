@@ -4,6 +4,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
 
 Firestore _firestore = Firestore.instance;
+FirebaseUser loginUser;
 
 class ChatScreen extends StatefulWidget {
   static String id = 'ChatScreen';
@@ -15,7 +16,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController controller = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser loginUser;
   String messageText;
 
   void getCurrentUser() async {
@@ -131,14 +131,16 @@ class MessageStream extends StatelessWidget {
             ),
           );
         }
-
-        final messages = snapshot.data.documents;
+        //
+        final messages = snapshot.data.documents.reversed;
         for (var message in messages) {
           final messageText = message.data['text'];
           final messageSender = message.data['sender'];
+
           MessageBubble bubble = MessageBubble(
             message: messageText,
             sender: messageSender,
+            isMe: loginUser.email == messageSender,
           );
           messageWidgets.add(bubble);
         }
@@ -146,6 +148,7 @@ class MessageStream extends StatelessWidget {
         // 這樣ListView才知道要長多高
         return Expanded(
           child: ListView(
+            reverse: true,
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
             children: messageWidgets,
           ),
@@ -156,10 +159,11 @@ class MessageStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({this.message, this.sender});
+  MessageBubble({this.message, this.sender, this.isMe});
 
   final String message;
   final String sender;
+  final bool isMe;
 
   @override
   Widget build(BuildContext context) {
@@ -167,17 +171,26 @@ class MessageBubble extends StatelessWidget {
       // 讓每個氣泡不要連在一起
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             sender,
             style: TextStyle(color: Colors.white, fontSize: 10.0),
           ),
           Material(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: isMe
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30))
+                : BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30)),
             // 陰影
             elevation: 5.0,
-            color: Colors.lightBlueAccent,
+            color: isMe ? Colors.lightBlueAccent : Colors.lightGreen,
             child: Padding(
               // 讓藍色泡泡跟內部文字有個距離
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),

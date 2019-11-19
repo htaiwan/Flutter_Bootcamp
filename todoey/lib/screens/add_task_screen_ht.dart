@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AddTaskScreenHT extends StatelessWidget {
+  final Function addTaskButtonCallback;
+
+  AddTaskScreenHT({this.addTaskButtonCallback});
+
   @override
   Widget build(BuildContext context) {
+    String newTaskTitle;
+
     // 要做成有圓角的action sheet需要一些小技巧
     return Container(
       // 先一個底層container偽裝成背景色
@@ -29,6 +35,9 @@ class AddTaskScreenHT extends StatelessWidget {
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
+              onChanged: (text) {
+                newTaskTitle = text;
+              },
             ),
             SizedBox(
               height: 20,
@@ -39,7 +48,9 @@ class AddTaskScreenHT extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.lightBlueAccent,
-              onPressed: () {},
+              onPressed: () {
+                print(newTaskTitle);
+              },
             ),
           ],
         ),

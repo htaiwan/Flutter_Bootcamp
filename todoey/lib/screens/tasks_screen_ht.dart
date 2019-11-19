@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 
+import '../models/task.dart';
 import '../screens/add_task_screen_ht.dart';
 import '../widgets/task_list_ht.dart';
 
-class TasksScreenHT extends StatelessWidget {
+class TasksScreenHT extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _TasksScreenHTState();
+  }
+}
+
+class _TasksScreenHTState extends State<TasksScreenHT> {
+  List<Task> tasks = [
+//    Task(name: "喝飲料"),
+//    Task(name: "吃雞排"),
+//    Task(name: "去運動"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +27,17 @@ class TasksScreenHT extends StatelessWidget {
           child: Icon(Icons.add),
           onPressed: () {
             showModalBottomSheet(
-                context: context, builder: (context) => AddTaskScreenHT());
+                context: context,
+                builder: (context) => AddTaskScreenHT(
+                      addTaskButtonCallback: (title) {
+                        setState(() {
+                          print(title);
+                          tasks.add(Task(name: title));
+                          // 移除showModalBottomSheet
+                          Navigator.pop(context);
+                        });
+                      },
+                    ));
           }),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +68,7 @@ class TasksScreenHT extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12 tasks',
+                  '${tasks.length} tasks',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.white,
@@ -63,7 +87,9 @@ class TasksScreenHT extends StatelessWidget {
                   topRight: Radius.circular(30),
                 ),
               ),
-              child: TaskListHT(),
+              child: TaskListHT(
+                tasks: tasks,
+              ),
             ),
           ),
         ],

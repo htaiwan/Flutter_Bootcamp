@@ -29,6 +29,8 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trilogies/models/faves.dart';
 import 'package:trilogies/models/films.dart';
 
 class FaveButton extends StatelessWidget {
@@ -38,10 +40,15 @@ class FaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var faves = Provider.of<FavesModel>(context);
     return FlatButton(
-      onPressed: () => null,
+      onPressed: faves.films.contains(film)
+          ? () => faves.remove(film)
+          : () => faves.add(film),
       splashColor: Theme.of(context).primaryColor,
-      child: Icon(Icons.star_border),
+      child: faves.films.contains(film)
+          ? Icon(Icons.star)
+          : Icon(Icons.star_border),
     );
   }
 }

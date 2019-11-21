@@ -30,6 +30,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trilogies/models/faves.dart';
 import 'package:trilogies/models/films.dart';
 import 'package:trilogies/pages/faves_page.dart';
 import 'package:trilogies/pages/films_page.dart';
@@ -58,7 +59,11 @@ class _ApplicationState extends State<Application> {
       providers: [
         Provider(
           builder: (context) => FilmsModel(),
-        )
+        ),
+        ChangeNotifierProxyProvider<FilmsModel, FavesModel>(
+          builder: (context, films, previousFaves) =>
+              FavesModel(films, previousFaves),
+        ),
       ],
       child: MaterialApp(
         title: 'Trilogies',

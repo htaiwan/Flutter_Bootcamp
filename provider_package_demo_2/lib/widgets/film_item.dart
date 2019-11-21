@@ -30,6 +30,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trilogies/widgets/fave_button.dart';
 
 import '../models/films.dart';
 
@@ -56,6 +57,9 @@ class FilmItem extends StatelessWidget {
                 film.episodeId.toString(),
                 style: filmNumberStyle,
               )),
+          trailing: FaveButton(
+            film: film,
+          ),
         ));
   }
 }

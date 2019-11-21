@@ -29,18 +29,21 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trilogies/models/faves.dart';
 import 'package:trilogies/widgets/film_item.dart';
 
 class FavesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var favesCount = 0;
+    var faves = Provider.of<FavesModel>(context);
+    var favesCount = faves.length;
 
     if (favesCount == 0) {
       var style = Theme.of(context).textTheme.title;
       return Center(
         child: Text(
-          'Faves',
+          'No Favorites selected',
           style: style,
         ),
       );
@@ -74,7 +77,10 @@ class _FavesSize extends StatelessWidget {
       color: Theme.of(context).accentColor,
       child: SizedBox(
         height: 40,
-        child: Center(child: Text('Faves Size', style: textStyle)),
+        child: Center(
+            child: Consumer<FavesModel>(
+                builder: (_, faves, _) {},
+                child: Text('Faves Size', style: textStyle))),
       ),
     );
   }

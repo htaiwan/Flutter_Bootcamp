@@ -29,6 +29,9 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/films.dart';
 
 class FilmItem extends StatelessWidget {
   final int id;
@@ -37,13 +40,22 @@ class FilmItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var films = Provider.of<FilmsModel>(context);
+    var film = films.getById(id);
+    var filmNumberStyle = TextStyle(
+        color: film.iconColor, fontWeight: FontWeight.bold, fontSize: 18.0);
     var filmNameStyle = Theme.of(context).textTheme.title;
 
     return Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListTile(
-          title: Text('Film name', style: filmNameStyle),
-          leading: CircleAvatar(backgroundColor: Colors.blue, child: Text('#')),
+          title: Text(film.name, style: filmNameStyle),
+          leading: CircleAvatar(
+              backgroundColor: film.backgroundColor,
+              child: Text(
+                film.episodeId.toString(),
+                style: filmNumberStyle,
+              )),
         ));
   }
 }

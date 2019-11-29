@@ -4,7 +4,7 @@ import 'package:restaurant_finder/BLoC/bloc.dart';
 class BlocProvider<T extends Bloc> extends StatefulWidget {
   final Widget child;
   final T bloc;
-
+  // construct用在widget tree頂端，並把bloc丟進來
   const BlocProvider({Key key, @required this.bloc, @required this.child})
       : super(key: key);
 
@@ -12,6 +12,7 @@ class BlocProvider<T extends Bloc> extends StatefulWidget {
 
   // The of method allows widgets to retrieve the BlocProvider from a descendant in the widget tree with the current build context.
   // This is a very common pattern in Flutter.
+  // 利用of的方式，我們可以在sub widget中把，bloc取出來
   static T of<T extends Bloc>(BuildContext context) {
     final type = _providerType<BlocProvider<T>>();
     final BlocProvider<T> provider = context.ancestorWidgetOfExactType(type);

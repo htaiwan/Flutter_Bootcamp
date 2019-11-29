@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:restaurant_finder/BLoC/bloc_provider.dart';
-import 'package:restaurant_finder/BLoC/restaurant_bloc.dart';
+import 'package:restaurant_finder/BLoC/restaurant_query_bloc.dart';
 import 'package:restaurant_finder/DataLayer/location.dart';
 import 'package:restaurant_finder/DataLayer/restaurant.dart';
 import 'package:restaurant_finder/UI/restaurant_tile.dart';
+
+import 'favorite_screen.dart';
 
 class RestaurantScreen extends StatelessWidget {
   final Location location;
@@ -15,15 +17,22 @@ class RestaurantScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(location.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.favorite_border),
+            onPressed: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => FavoriteScreen())),
+          )
+        ],
       ),
       body: _buildSearch(context),
     );
   }
 
   Widget _buildSearch(BuildContext context) {
-    final bloc = RestaurantBloc(location);
+    final bloc = RestaurantQueryBloc(location);
 
-    return BlocProvider<RestaurantBloc>(
+    return BlocProvider<RestaurantQueryBloc>(
       bloc: bloc,
       child: Column(
         children: <Widget>[
@@ -43,7 +52,7 @@ class RestaurantScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStreamBuilder(RestaurantBloc bloc) {
+  Widget _buildStreamBuilder(RestaurantQueryBloc bloc) {
     return StreamBuilder(
         stream: bloc.stream,
         builder: (context, snapshot) {
@@ -67,7 +76,7 @@ class RestaurantScreen extends StatelessWidget {
           final restaurant = results[index];
           return RestaurantTile(restaurant: restaurant);
         },
-        separatorBuilder: (context, indext) {
+        separatorBuilder: (context, index) {
           return Divider();
         },
         itemCount: results.length);

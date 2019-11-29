@@ -41,7 +41,6 @@ class LocationScreen extends StatelessWidget {
   }
 
   Widget _buildResults(LocationQueryBloc bloc) {
-    // 利用streamBuilder來監聽bloc.locationStream的變化, 並對UI產生對應變化
     return StreamBuilder<List<Location>>(
       stream: bloc.locationStream,
       builder: (context, snapshot) {

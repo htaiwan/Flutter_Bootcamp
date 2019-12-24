@@ -6,6 +6,8 @@ import 'package:flutter_food_delivery_app/data/data.dart';
 import 'package:flutter_food_delivery_app/models/restaurant.dart';
 import 'package:flutter_food_delivery_app/screens/restaurant_screen.dart';
 
+import 'cart_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -108,7 +110,12 @@ class _HomeScreenState extends State<HomeScreen> {
               'cart (${currentUser.cart.length})',
               style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => CartScreen(),
+              ),
+            ),
           )
         ],
       ),

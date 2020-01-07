@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_budget_ui/Widgets/bar_chart.dart';
+import 'package:flutter_budget_ui/data/data.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -37,11 +39,21 @@ class _HomeScreenState extends State<HomeScreen> {
               (BuildContext context, int index) {
                 return Container(
                   margin: EdgeInsets.all(10.0),
-                  height: 100.0,
-                  color: Colors.red,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0, 2),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: BarChart(expenses: weeklySpending),
                 );
               },
-              childCount: 10,
+              childCount: 1,
             ),
           ),
         ],
